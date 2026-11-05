@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, Sprout } from "lucide-react";
 
-const Home = () => {
+export default function Home() {
   return (
     <section className="px-6 py-20 text-center sm:py-28">
       <div className="mx-auto max-w-4xl">
@@ -40,6 +40,4 @@ const Home = () => {
       </div>
     </section>
   );
-};
-
-export default Home;
+}
