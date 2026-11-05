@@ -1,35 +1,45 @@
+import Link from "next/link";
 import { ArrowUpRight, Sprout } from "lucide-react";
 
-export default function Home() {
+const Home = () => {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#f8f7f2] px-6 py-16 text-[#174b3a]">
-      <section className="max-w-3xl text-center">
-        <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#174b3a]/15 px-4 py-2 text-sm font-medium">
-          <Sprout size={18} />
+    <section className="px-6 py-20 text-center sm:py-28">
+      <div className="mx-auto max-w-4xl">
+        <div className="mb-8 inline-flex items-center gap-2 rounded-full bg-base-200 px-4 py-2 text-sm">
+          <Sprout size={18} className="text-green-600" />
           Small actions. Stronger communities.
         </div>
 
-        <p className="mb-5 text-xl font-bold tracking-tight">
-          Together<span className="text-[#64813c]">Serve</span>
-          <span className="text-[#64813c]">.</span>
-        </p>
-
-        <h1 className="text-4xl font-bold leading-tight tracking-tight sm:text-6xl">
+        <h1 className="text-4xl font-bold leading-tight sm:text-6xl">
           A little of your time.
           <br />
-          A lasting change.
+          <span className="text-green-600">A lasting change.</span>
         </h1>
 
-        <p className="mx-auto mt-6 max-w-xl text-base leading-8 text-[#52665c] sm:text-lg">
+        <p className="mx-auto mt-6 max-w-xl text-base leading-8 sm:text-lg">
           Discover local causes, join meaningful events, and bring
           your neighborhood together.
         </p>
 
-        <div className="mt-9 inline-flex items-center gap-2 rounded-full bg-[#d4f77d] px-5 py-3 font-semibold">
-          Your community starts here
-          <ArrowUpRight size={20} />
+        <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+          <Link
+            href="/upcoming-events"
+            className="btn rounded-full border-0 bg-green-700 px-7 text-white hover:bg-green-800"
+          >
+            Explore Events
+            <ArrowUpRight size={19} />
+          </Link>
+
+          <Link
+            href="/login"
+            className="btn btn-outline rounded-full px-7"
+          >
+            Get Involved
+          </Link>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
   );
-}
+};
+
+export default Home;
