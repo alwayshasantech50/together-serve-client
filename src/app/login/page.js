@@ -1,3 +1,6 @@
+import Link from "next/link";
+
+
 const LoginPage = () => {
   return (
     <section className="mx-auto max-w-lg px-6 py-16">
@@ -5,7 +8,17 @@ const LoginPage = () => {
         <h1 className="text-3xl font-bold">Welcome back</h1>
 
         <p className="mt-4 leading-7">
-          We’ll add the login form when we connect authentication.
+          Our login form is coming in the next step.
+        </p>
+
+        <p className="mt-6 text-sm">
+          New to TogetherServe?{" "}
+          <Link
+            href="/register"
+            className="font-semibold text-green-600 hover:underline"
+          >
+            Create an account
+          </Link>
         </p>
       </div>
     </section>
