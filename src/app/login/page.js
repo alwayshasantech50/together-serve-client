@@ -6,6 +6,8 @@ import { useState } from "react";
 import { HeartHandshake } from "lucide-react";
 import toast from "react-hot-toast";
 import { authClient } from "@/lib/auth-client";
+import GoogleLogin from "@/components/GoogleLogin";
+
 
 const LoginPage = () => {
   const router = useRouter();
@@ -125,6 +127,12 @@ const LoginPage = () => {
               </button>
             </fieldset>
           </form>
+
+
+          <div className="divider my-6">OR</div>
+
+          <GoogleLogin />
+
 
           <p className="mt-6 text-center text-sm">
             New to TogetherServe?{" "}
