@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import JoinEventButton from "@/components/JoinEventButton";
 
 const EventDetailsPage = async ({ params }) => {
     const { id } = await params;
@@ -85,6 +86,13 @@ const EventDetailsPage = async ({ params }) => {
                 <p className="mt-4 whitespace-pre-wrap break-words leading-8">
                     {event.description}
                 </p>
+                <div className="mt-8 border-t border-base-300 pt-6">
+                    <JoinEventButton
+                        eventId={event._id}
+                        eventDate={event.eventDate}
+                    />
+                </div>
+
             </div>
         </section>
     );
