@@ -8,17 +8,11 @@ import { UserRound } from "lucide-react";
 import toast from "react-hot-toast";
 import { authClient } from "@/lib/auth-client";
 
-
 const UserMenu = () => {
   const router = useRouter();
   const [loggingOut, setLoggingOut] = useState(false);
 
-  const {
-    data: session,
-    isPending,
-    error,
-    refetch,
-  } = authClient.useSession();
+  const { data: session, isPending, error, refetch } = authClient.useSession();
 
   const handleLogout = async () => {
     if (loggingOut) {
@@ -45,8 +39,6 @@ const UserMenu = () => {
     }
   };
 
-  
-  
   if (isPending) {
     return (
       <div role="status" className="flex items-center gap-2">
@@ -68,8 +60,6 @@ const UserMenu = () => {
     );
   }
 
-  
-  
   if (!session) {
     return (
       <Link
@@ -108,9 +98,16 @@ const UserMenu = () => {
         <div className="dropdown-content z-50 mt-3 w-60 rounded-2xl border border-base-300 bg-base-100 p-4 shadow-lg">
           <p className="break-words font-semibold">{user.name}</p>
 
-          <p className="mt-1 break-words text-sm">
-            {user.email}
-          </p>
+          <p className="mt-1 break-words text-sm">{user.email}</p>
+
+          <div className="mt-4 border-t border-base-300 pt-3">
+            <Link
+              href="/create-event"
+              className="block rounded-lg px-3 py-2 text-sm hover:bg-base-200"
+            >
+              Create Event
+            </Link>
+          </div>
         </div>
       </details>
 
