@@ -5,12 +5,26 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { getAuthHeaders } from "@/lib/getAuthHeaders";
 
-
-const CreateEventForm = () => {
+const CreateEventForm = ({ initialEvent = null }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const handleCreateEvent = async (event) => {
+  const editing = initialEvent !== null;
+  const actionText = editing ? "Update Event" : "Create Event";
+
+  let defaultDate = "";
+
+  if (editing) {
+    const localDate = new Date(initialEvent.eventDate);
+
+    localDate.setMinutes(
+      localDate.getMinutes() - localDate.getTimezoneOffset(),
+    );
+
+    defaultDate = localDate.toISOString().slice(0, 16);
+  }
+
+  const handleSaveEvent = async (event) => {
     event.preventDefault();
 
     if (loading) {
@@ -64,32 +78,35 @@ const CreateEventForm = () => {
     try {
       const authHeaders = await getAuthHeaders();
 
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/events`,
-        {
-          method: "POST",
+      const url = editing
+        ? `${process.env.NEXT_PUBLIC_SERVER_URL}/api/events/${initialEvent._id}`
+        : `${process.env.NEXT_PUBLIC_SERVER_URL}/api/events`;
 
-          headers: {
-            ...authHeaders,
-            "Content-Type": "application/json",
-          },
+      const response = await fetch(url, {
+        method: editing ? "PUT" : "POST",
 
-          body: JSON.stringify(newEvent),
+        headers: {
+          ...authHeaders,
+          "Content-Type": "application/json",
         },
-      );
+
+        body: JSON.stringify(newEvent),
+      });
 
       const data = await response.json();
 
       if (!response.ok) {
-        toast.error(data.message || "Unable to create the event.");
+        toast.error(data.message || "Unable to save the event.");
         return;
       }
 
-      toast.success("Event created successfully!");
+      toast.success(
+        editing ? "Event updated successfully!" : "Event created successfully!",
+      );
 
-      router.push("/upcoming-events");
+      router.push(editing ? "/manage-events" : "/upcoming-events");
     } catch (error) {
-      toast.error(error.message || "Unable to create the event.");
+      toast.error(error.message || "Unable to save the event.");
     } finally {
       setLoading(false);
     }
@@ -101,15 +118,16 @@ const CreateEventForm = () => {
         Bring your community together
       </p>
 
-      <h1 className="mt-3 text-3xl font-bold sm:text-4xl">Create an event</h1>
+      <h1 className="mt-3 text-3xl font-bold sm:text-4xl">{actionText}</h1>
 
       <p className="mt-4 leading-7">
-        Share a cause, choose a date, and invite others to make a difference
-        with you.
+        {editing
+          ? "Keep your event information clear and up to date for your volunteers."
+          : "Share a cause, choose a date, and invite others to make a difference with you."}
       </p>
 
       <form
-        onSubmit={handleCreateEvent}
+        onSubmit={handleSaveEvent}
         className="mt-8 rounded-3xl border border-base-300 bg-base-200 p-6 sm:p-8"
       >
         <fieldset disabled={loading} className="space-y-6">
@@ -122,6 +140,7 @@ const CreateEventForm = () => {
               id="title"
               name="title"
               type="text"
+              defaultValue={initialEvent?.title || ""}
               placeholder="Winter Clothes Distribution"
               required
               className="input w-full"
@@ -137,6 +156,7 @@ const CreateEventForm = () => {
               id="description"
               name="description"
               rows={5}
+              defaultValue={initialEvent?.description || ""}
               placeholder="Explain the purpose, planned activities, and anything volunteers should bring."
               required
               className="textarea w-full"
@@ -152,13 +172,14 @@ const CreateEventForm = () => {
               <select
                 id="eventType"
                 name="eventType"
-                defaultValue=""
+                defaultValue={initialEvent?.eventType || ""}
                 required
                 className="select w-full"
               >
                 <option value="" disabled>
                   Select an event type
                 </option>
+
                 <option value="Cleanup">Cleanup</option>
                 <option value="Plantation">Plantation</option>
                 <option value="Donation">Donation</option>
@@ -177,6 +198,7 @@ const CreateEventForm = () => {
                 id="eventDate"
                 name="eventDate"
                 type="datetime-local"
+                defaultValue={defaultDate}
                 aria-describedby="event-date-help"
                 required
                 className="input w-full"
@@ -197,6 +219,7 @@ const CreateEventForm = () => {
               id="thumbnail"
               name="thumbnail"
               type="url"
+              defaultValue={initialEvent?.thumbnail || ""}
               placeholder="https://example.com/event-photo.jpg"
               required
               className="input w-full"
@@ -212,6 +235,7 @@ const CreateEventForm = () => {
               id="location"
               name="location"
               type="text"
+              defaultValue={initialEvent?.location || ""}
               placeholder="Mirpur 10, Dhaka"
               required
               className="input w-full"
@@ -222,7 +246,7 @@ const CreateEventForm = () => {
             type="submit"
             className="btn w-full rounded-full border-0 bg-green-700 text-white hover:bg-green-800"
           >
-            {loading ? "Creating event..." : "Create Event"}
+            {loading ? "Saving event..." : actionText}
           </button>
         </fieldset>
       </form>

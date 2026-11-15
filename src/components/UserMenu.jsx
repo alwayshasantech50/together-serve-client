@@ -113,6 +113,12 @@ const UserMenu = () => {
             >
               Joined Events
             </Link>
+            <Link
+              href="/manage-events"
+              className="block rounded-lg px-3 py-2 text-sm hover:bg-base-200"
+            >
+              Manage Events
+            </Link>
           </div>
         </div>
       </details>
