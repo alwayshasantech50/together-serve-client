@@ -5,7 +5,9 @@ import { jwtClient } from "better-auth/client/plugins";
 
 
 export const authClient = createAuthClient({
-  baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
+  baseURL:
+    process.env.NEXT_PUBLIC_AUTH_URL ||
+    process.env.NEXT_PUBLIC_SERVER_URL,
 
   fetchOptions: {
     credentials: "include",
