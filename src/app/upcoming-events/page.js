@@ -12,12 +12,12 @@ const UpcomingEventsPage = () => {
       </h1>
 
       <p className="mt-4 max-w-2xl leading-7">
-        Discover local opportunities to give your time, support a
-        cause, and make a difference with your community.
+        Find a cause close to your heart. Search by event title,
+        explore a location, or choose the type of service you enjoy.
       </p>
 
       <div className="mt-10">
-        <EventGrid />
+        <EventGrid showFilters={true} />
       </div>
     </section>
   );
