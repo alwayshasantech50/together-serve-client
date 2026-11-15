@@ -101,23 +101,33 @@ const UserMenu = () => {
           <p className="mt-1 break-words text-sm">{user.email}</p>
 
           <div className="mt-4 border-t border-base-300 pt-3">
+
+            <Link
+              href="/profile"
+              className="block rounded-lg px-3 py-2 text-sm hover:bg-base-200"
+            >
+              My Profile
+            </Link>
+
             <Link
               href="/create-event"
               className="block rounded-lg px-3 py-2 text-sm hover:bg-base-200"
             >
               Create Event
             </Link>
-            <Link
-              href="/joined-events"
-              className="block rounded-lg px-3 py-2 text-sm hover:bg-base-200"
-            >
-              Joined Events
-            </Link>
+
             <Link
               href="/manage-events"
               className="block rounded-lg px-3 py-2 text-sm hover:bg-base-200"
             >
               Manage Events
+            </Link>
+            
+            <Link
+              href="/joined-events"
+              className="block rounded-lg px-3 py-2 text-sm hover:bg-base-200"
+            >
+              Joined Events
             </Link>
           </div>
         </div>
