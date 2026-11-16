@@ -7,8 +7,7 @@ that support their communities.
 
 ## Live Website
 
-The live website URL will be added after deployment.
-
+https://together-serve-client.vercel.app/
 
 ## Features
 
